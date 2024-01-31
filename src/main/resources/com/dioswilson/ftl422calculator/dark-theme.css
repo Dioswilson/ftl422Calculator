@@ -1,0 +1,36 @@
+.root {
+    -fx-background-color: #2b2b2b;
+    -fx-text-fill: white;
+}
+
+#calculateResults {
+    -fx-background-color: #333333;
+}
+
+#resultsList {
+    -fx-background-color: #1f1f1f; /* Darker background for ListView */
+    -fx-control-inner-background: #1f1f1f; /* Darker background for the items inside ListView */
+    -fx-text-fill: #1f1f1f; /* Light text color */
+}
+
+#directionLabel {
+    -fx-text-fill: white;
+}
+
+.text-field {
+    -fx-background-color: #404040;
+    -fx-text-fill: white;
+}
+
+.button {
+    -fx-background-color: #666666;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: #999999;
+}
+
+.label {
+    -fx-text-fill: white;
+}
