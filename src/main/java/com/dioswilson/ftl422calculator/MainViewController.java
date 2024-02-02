@@ -168,7 +168,7 @@ public class MainViewController implements Initializable {
 
                     if (t11 == 1) {
                         t11 = 0;
-                        t1 = 11;
+                        t1 += 11;
                     }
                     if (t11 == 0 && t143 == 0 && t286 > 0) {
                         t286 -= 1;
