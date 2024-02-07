@@ -5,6 +5,7 @@ public class EnderPearlEntity extends Entity {
     public EnderPearlEntity(double posX, double posY, double posZ, double motionX, double motionY, double motionZ) {
         super(posX, posY, posZ, motionX, motionY, motionZ);
     }
+
     public EnderPearlEntity(Entity entity) {
         super(entity);
     }
@@ -19,7 +20,7 @@ public class EnderPearlEntity extends Entity {
 
     @Override
     public float getEyeHeight() {
-        return 0.25F*0.85F;
+        return 0.25F * 0.85F;
     }
 
 
