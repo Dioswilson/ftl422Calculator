@@ -3,15 +3,14 @@ plugins {
     id 'application'
     id 'org.javamodularity.moduleplugin' version '1.8.12'
     id 'org.openjfx.javafxplugin' version '0.0.13'
-    id 'org.beryx.jlink' version '2.25.0'
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id "org.panteleyev.jpackageplugin" version "1.6.1"
 }
 
 group 'com.dioswilson'
 
-mainClassName='com.dioswilson.ftl422calculator.FtlCalculatorApplication'
+mainClassName = 'com.dioswilson.ftl422calculator.FtlCalculatorApplication'
 
-version="1.0.0"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -53,21 +52,34 @@ test {
     useJUnitPlatform()
 }
 
-jlink {
-    imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
-    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
-    launcher {
-        name = 'ftl422calculator'
-    }
+tasks.register("copyDependencies", Copy) {
+    from configurations.runtimeClasspath
+    into "$buildDir/jmods"
 }
 
-jlinkZip {
-    group = 'distribution'
+tasks.register("copyJar", Copy) {
+    from tasks.named("jar")
+    into "$buildDir/jmods"
 }
-shadowJar {
-    zip64 true
-    mergeServiceFiles()
-    manifest {
-        attributes 'Main-Class': 'com.dioswilson.ftl422calculator.FtlCalculatorApplication'
+
+tasks.named("jpackage") {
+    dependsOn "build", "copyDependencies", "copyJar"
+
+    appName = "ftl422Calculator"
+    appVersion = project.version.toString()
+    vendor = "Dioswilson"
+    runtimeImage = System.getProperty("java.home")
+    module = "com.dioswilson.ftl422calculator/com.dioswilson.ftl422calculator.FtlCalculatorApplication"
+    modulePaths = [file("$buildDir/jmods")]
+    destination = file("$buildDir/dist")
+    javaOptions = ["-Dfile.encoding=UTF-8"]
+    icon = "icons/FtlCalcIcon.ico"
+
+    windows {
+        winMenu = true
+        winDirChooser = true
+        type = "MSI"
+        winShortcut = true
+        winShortcutPrompt = true
     }
 }
